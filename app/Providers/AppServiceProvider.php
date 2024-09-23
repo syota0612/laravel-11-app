@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
+        if ($app->isLocal()) {
+            $app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
@@ -19,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /** @var \Illuminate\Foundation\Application $app */
+        $app = $this->app;
+        Model::shouldBeStrict(! $app->isProduction());
     }
 }

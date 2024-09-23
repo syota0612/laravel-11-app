@@ -1,18 +1,25 @@
 {
-    "name": "laravel/laravel",
+    "name": "syota0612/laravel-11-app",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Latest Laravel 11 Application",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "*",
+        "barryvdh/laravel-ide-helper": "^3.1",
+        "beyondcode/laravel-dump-server": "^2.0",
         "fakerphp/faker": "^1.23",
-        "laravel/pint": "^1.13",
+        "larastan/larastan": "^2.0",
+        "laravel/dusk": "^8.2",
+        "laravel/pint": "^1.17",
         "laravel/sail": "^1.26",
+        "laravel/telescope": "^5.2",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0.1"
@@ -48,7 +55,10 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/dusk",
+                "laravel/telescope"
+            ]
         }
     },
     "config": {
