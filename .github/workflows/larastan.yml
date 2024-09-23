@@ -1,0 +1,44 @@
+name: Larastan
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/*
+  pull_request:
+    branches:
+      - main
+      - develop
+      - feature/*
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.3]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+
+      - name: Run Composer Install
+        run: composer install
+        working-directory: ./src
+
+      - name: Run Larastan Install
+        run: composer require nunomaduro/larastan --dev
+
+      - name: Run Larastan
+        run: vendor/bin/phpstan analyze -c ./phpstan.neon
+        working-directory: ./src
