@@ -17,7 +17,10 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.3]
+        php:
+          - 8.3
+        repo:
+          - ${{ github.repository }}
 
     steps:
       - name: Checkout code
@@ -38,6 +41,10 @@ jobs:
       - name: Run Larastan Install
         run: composer require nunomaduro/larastan --dev
 
+      # ローカルリポジトリのphpstan.neonをactionsで使うためにコピー
+      - name: Copy phpstan.neon
+        run: cp phpstan.neon ${{ matrix.repo }}/phpstan.neon
+
       - name: Run Larastan
-        run: vendor/bin/phpstan analyze -c ./phpstan.neon
-        working-directory: ./src
+        run: vendor/bin/phpstan analyse --memory-limit=2G
+        working-directory: ${{ matrix.repo }}
