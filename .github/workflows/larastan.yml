@@ -33,8 +33,7 @@ jobs:
           coverage: none
 
       - name: Run Composer Install
-        run: composer install
-        working-directory: ./src
+        run: composer install -n --prefer-dist
 
       - name: Run Larastan Install
         run: composer require nunomaduro/larastan --dev
