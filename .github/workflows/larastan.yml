@@ -1,10 +1,5 @@
 name: Larastan
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - feature/*
   pull_request:
     branches:
       - main
